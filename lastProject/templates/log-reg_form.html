@@ -1,0 +1,29 @@
+<!-- log-reg_form.html -->
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Мой сайт{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a href="{% url 'home' %}">
+                <img src="{% static 'logo.png' %}" alt="Логотип">
+            </a>
+            <h1>Good quiz!</h1>
+        </div>
+
+    </header>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    <footer>
+        &copy; 2024 Мой сайт
+    </footer>
+</body>
+</html>

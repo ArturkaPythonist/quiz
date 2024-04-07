@@ -1,0 +1,112 @@
+/* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    background-color: #333;
+    color: white;
+    padding: 10px;
+}
+
+header img {
+    width: 100px;
+    height: auto;
+}
+
+.auth-buttons {
+    align-self: flex-start;
+    display: flex;
+    gap: 10px;
+    margin-right: 20px;
+    margin-top: 10px;
+}
+
+nav {
+    display: flex;
+    justify-content: space-around;
+    background-color: #555;
+    padding: 10px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 8px;
+    border: none; /* Убираем рамку */
+}
+
+/* Стили для активной кнопки */
+nav a.active {
+    color: white;
+    border-bottom: 2px solid #4CAF50; /* Подчеркивание */
+}
+
+main {
+    padding: 20px;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.login-container {
+    text-align: center;
+    max-width: 400px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: auto;
+}
+
+h2 {
+    color: #333;
+}
+
+form {
+    margin-top: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+}
+
+input[type="submit"] {
+    background-color: #555;
+    color: #fff;
+    cursor: pointer;
+}
+
+.error {
+    color: red;
+}
+
+.user-link {
+    color: lightgreen;
+    text-decoration: none;
+}
