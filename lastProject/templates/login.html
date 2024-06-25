@@ -7,21 +7,21 @@
     <title>Title</title>
 </head>
 <body>
-    {% block content %}
-        <div class="login-container">
-            <h1>Вход</h1>
-            {% if error %}
-                <p class="error">{{ error }}</p>
-            {% endif %}
-            <form method="post" action="{% url 'user_login' %}">
-                {% csrf_token %}
-                <label for="username">Логин</label><br>
-                <input type="text" id="username" name="username"><br>
-                <label for="password">Пароль</label><br>
-                <input type="password" id="password" name="password"><br><br>
-                <input type="submit" value="Войти">
-            </form>
-        </div>
-    {% endblock %}
+{% block content %}
+    <div class="login-container">
+        <h1>Вход</h1>
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+        <form method="post" action="{% url 'user_login' %}">
+            {% csrf_token %}
+            <label for="username">Логин</label><br>
+            <input type="text" id="username" name="username"><br>
+            <label for="password">Пароль</label><br>
+            <input type="password" id="password" name="password"><br><br>
+            <input type="submit" value="Войти">
+        </form>
+    </div>
+{% endblock %}
 </body>
 </html>

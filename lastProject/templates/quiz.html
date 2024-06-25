@@ -1,12 +1,105 @@
 {% extends 'base.html' %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% block content %}
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Quiz</title>
+        <script>
+            let currentQuestionIndex = 1;
+            let correctAnswers = 0;
+            let totalQuestions = 0;
 
-</body>
-</html>
+            function startQuiz() {
+                fetch('/quiz/start/')
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.first_question !== undefined) {
+                            document.querySelector('.start-button').style.display = 'none'; // Скрыть кнопку "Начать"
+                            totalQuestions = data.total_questions; // Устанавливаем общее количество вопросов
+                            loadQuestion(currentQuestionIndex);  // Загружаем первый вопрос
+                        } else {
+                            alert('Error starting quiz');
+                        }
+                    });
+            }
+
+            function loadQuestion(questionIndex) {
+                fetch(`/quiz/question/${questionIndex}/`)
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('question-container').style.display = 'block';
+                        document.getElementById('question-text').textContent = data.text;
+                        const optionsContainer = document.getElementById('options-container');
+                        optionsContainer.innerHTML = '';
+                        // Перемешиваем варианты ответов
+                        const shuffledChoices = shuffleArray(data.choices);
+                        shuffledChoices.forEach(choice => {
+                            const optionLabel = document.createElement('label');
+                            optionLabel.innerHTML = `<input type="radio" name="answer" value="${choice.id}"> ${choice.text}`;
+                            optionsContainer.appendChild(optionLabel);
+                            optionsContainer.appendChild(document.createElement('br'));
+                        });
+                        currentQuestionIndex = questionIndex; // Обновляем текущий индекс вопроса
+                        history.pushState(null, null, `/quiz/question/${questionIndex}/`); // Обновление URL
+                    });
+            }
+
+            function submitAnswer(event) {
+                event.preventDefault();
+                const selectedChoice = document.querySelector('input[name="answer"]:checked');
+                if (selectedChoice) {
+                    fetch('/quiz/submit/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': '{{ csrf_token }}'
+                        },
+                        body: JSON.stringify({
+                            choice_id: selectedChoice.value
+                        })
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.next_question_index !== undefined) {
+                                loadQuestion(data.next_question_index);
+                            } else {
+                                correctAnswers = data.correct_answers;
+                                totalQuestions = data.total_questions;
+                                showQuizResults(); // Показываем результаты квиза
+                            }
+                        });
+                } else {
+                    alert('Please select an answer');
+                }
+            }
+
+            function showQuizResults() {
+                const message = `Quiz finished. Correct answers: ${correctAnswers}/${totalQuestions - 1}`;
+                alert(message);
+                document.getElementById('question-container').style.display = 'none'; // Скрываем контейнер с вопросами
+            }
+
+            function shuffleArray(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+                return array;
+            }
+        </script>
+    </head>
+    <body>
+    <button class="start-button" onclick="startQuiz()">Начать</button>
+    <div id="question-container" class="question-container" style="display: none;">
+        <h1>Quiz</h1>
+        <p id="question-text"></p>
+        <form onsubmit="submitAnswer(event)">
+            <div id="options-container"></div>
+            <button type="submit">Submit Answer</button>
+        </form>
+    </div>
+    </body>
+    </html>
+{% endblock %}

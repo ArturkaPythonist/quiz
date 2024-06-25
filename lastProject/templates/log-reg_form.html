@@ -10,20 +10,17 @@
     <link rel="stylesheet" href="{% static 'styles.css' %}">
 </head>
 <body>
-    <header>
-        <div class="logo">
-            <a href="{% url 'home' %}">
-                <img src="{% static 'logo.png' %}" alt="Логотип">
-            </a>
-            <h1>Good quiz!</h1>
-        </div>
+<header>
+    <div class="logo">
+        <a href="{% url 'home' %}">
+            <img src="{% static 'logo.png' %}" alt="Логотип">
+        </a>
+        <h1>Good quiz!</h1>
+    </div>
 
-    </header>
-    <main>
-        {% block content %}{% endblock %}
-    </main>
-    <footer>
-        &copy; 2024 Мой сайт
-    </footer>
+</header>
+<main>
+    {% block content %}{% endblock %}
+</main>
 </body>
 </html>

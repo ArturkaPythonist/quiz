@@ -1,22 +1,42 @@
 {% extends 'base.html' %}
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>User Profile</title>
 </head>
-<body>
+<body class="scrollable">
 {% block content %}
-    <h1>User Profile</h1>
-    <h2>{{user_profile.user}}</h2>
-    <img src="{{ request.user.userprofile.profile_picture.url }}" alt="Profile Picture" width="200" height="200">
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="file">
-        <button type="submit">Save</button>
-    </form>
+    <div class="avatar-container">
+        <div class="username">{{ user.username }}</div>
+        {% if user_profile.profile_picture %}
+            <img src="{{ user_profile.profile_picture.url }}" alt="Profile Picture">
+        {% else %}
+            <p>No profile picture uploaded.</p>
+        {% endif %}
+        <form method="post" class="upload-form" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label class="input-file">
+                <input type="file" name="profile_picture" id="profile-picture-input" style="display: none;">
+                <span class="input-file-btn" id="file-input-btn">Заменить фото</span>
+            </label>
+            <button type="submit" class="upload-btn" id="upload-btn" style="display: none;">загрузить</button>
+        </form>
+        <div class="simple-text">
+            {{ user.email }}
+            {% if user.is_authenticated %}
+                <div style="color: green;">Сейчас на сайте</div>
+            {% endif %}
+            Зарегистрирован: {{ user.date_joined }}
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('profile-picture-input').addEventListener('change', function () {
+            document.getElementById('upload-btn').style.display = 'inline-block';
+        });
+    </script>
 {% endblock %}
 </body>
 </html>
