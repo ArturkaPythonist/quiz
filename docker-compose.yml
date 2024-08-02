@@ -34,7 +34,7 @@ services:
   nginx:
     image: nginx:latest
     ports:
-      - "80:81"
+      - "81:80"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
       - ./staticfiles:/app/staticfiles
@@ -47,7 +47,7 @@ services:
       PGADMIN_DEFAULT_EMAIL: admin@gmail.com
       PGADMIN_DEFAULT_PASSWORD: admin
     ports:
-      - "5050:82"
+      - "5050:5050"
     depends_on:
       - db
 
