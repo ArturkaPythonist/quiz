@@ -14,7 +14,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: arturkadockerist/quiz-web:latest
     volumes:
       - .:/app
       - ./staticfiles:/app/staticfiles
@@ -32,10 +31,10 @@ services:
   nginx:
     image: nginx:latest
     ports:
-      - "81:80"
+      - "80:80"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
-      - ./staticfiles:/app/staticfiles
+      - ./staticfiles:/usr/share/nginx/html/staticfiles
     depends_on:
       - web
 
