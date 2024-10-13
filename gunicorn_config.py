@@ -9,7 +9,7 @@ worker_class = "sync"
 bind = "0.0.0.0:8000"
 
 # Переход в рабочую директорию
-chdir = '/mnt/c/Users/Admin/PycharmProjects/quiz'
+os.chdir("/app")
 
 # Устанавливаем настройки Django
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "quiz.settings")
