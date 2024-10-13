@@ -12,9 +12,11 @@ services:
 
   web:
     build: .
-    command: sh -c "python manage.py migrate && gunicorn myproject.wsgi:application --bind 0.0.0.0:8000"
+    command: sh -c "python manage.py migrate && python manage.py collectstatic --noinput && gunicorn myproject.wsgi:application --bind 0.0.0.0:8000"
     volumes:
       - .:/code
+      - ./staticfiles:/code/staticfiles  # Монтирование каталога для статических файлов
+      - ./media:/code/media  # Монтирование каталога для медиа-файлов
     ports:
       - "8000:8000"
     environment:
@@ -31,7 +33,7 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx.conf:/etc/nginx/nginx.conf  # Ваш конфигурационный файл Nginx
     depends_on:
       - web
 
