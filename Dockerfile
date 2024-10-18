@@ -22,4 +22,4 @@ RUN python manage.py collectstatic --noinput
 EXPOSE 8000
 
 # Запуск команды миграций и Gunicorn
-CMD ["sh", "-c", "python manage.py migrate && gunicorn djangoProject.wsgi:application --bind 0.0.0.0:8000"]
+CMD ["sh", "-c", "python manage.py migrate && gunicorn djangoProject.wsgi:application --bind 0.0.0.0:8880"]
