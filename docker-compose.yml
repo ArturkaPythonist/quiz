@@ -13,7 +13,7 @@ services:
     volumes:
       - .:/code
     ports:
-      - "8880:8000"
+      - "8880:8880"
     environment:
       POSTGRES_DB: postgres
       POSTGRES_USER: postgres
