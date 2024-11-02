@@ -19,7 +19,7 @@ COPY . /app/
 RUN python manage.py collectstatic --noinput
 
 # Открываем порт 8000 для внешнего мира
-EXPOSE 8000
+EXPOSE 8880
 
 # Запуск команды миграций и Gunicorn
 CMD ["sh", "-c", "python manage.py migrate && gunicorn djangoProject.wsgi:application --bind 0.0.0.0:8880"]
